@@ -3,8 +3,8 @@ import os
 
 s3 = boto3.client(
     's3',
-    aws_access_key_id="AKIA3UA3D5CMZMJ2HYMQ",
-    aws_secret_access_key="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",
+    aws_access_key_id=os.getenv("aws_accesskey"),
+    aws_secret_access_key=os.getenv("aws_secretkey"),
 )
 
 async def upload_file_to_s3(file, bucket, object_name):
