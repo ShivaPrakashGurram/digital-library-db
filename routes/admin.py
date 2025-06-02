@@ -13,7 +13,7 @@ async def create_book(book: Book):
 
 @router.post("/admin/upload-book/{title}")
 async def upload_book(title: str, file: UploadFile = File(...)):
-    s3_url = upload_file_to_s3(file, os.getenv("aws_bucketname"), file.filename)
+    s3_url = await upload_file_to_s3(file, str(os.getenv("aws_bucketname")), file.filename)
     db.books.update_one({"title": title}, {"$set": {"s3_url": s3_url}})
     return {"message": "Book uploaded", "url": s3_url}
 

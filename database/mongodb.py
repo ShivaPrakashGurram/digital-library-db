@@ -4,5 +4,5 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-client = MongoClient("")
+client = MongoClient(os.getenv("mongodb_client"))
 db = client['digital_library']
