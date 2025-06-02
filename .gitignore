@@ -4,3 +4,4 @@ __pycache__
 fastapi-env
 Scripts
 Lib
+.env
