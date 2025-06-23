@@ -25,4 +25,4 @@ def generate_presigned_url(bucket_name: str, object_key: str, expiration=3600):
         return {"download_url": presigned_url}
 
     except ClientError as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        raise HTTPException(status_code=404, detail=str(e))

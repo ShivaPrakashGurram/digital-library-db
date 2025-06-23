@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>User</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+
+    .navbar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .nav-item {
+      cursor: pointer;
+      padding: 10px 20px;
+      background-color: #e0e0e0;
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-item:hover,
+    .nav-item.active {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .form-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 320px;
+      display: none;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 10px;
+      background-color: #acaaaa;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    footer {
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+    }
+    .wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+  </style>
+</head>
+<body>
+    <div class="wrapper">
+    <div class="navbar">
+        <div class="nav-item active" onclick="showForm('requestBookForm', this)">Request Book</div>
+        <div class="nav-item" onclick="showForm('returnBookForm', this)">Return Book</div>
+        <div class="nav-item" onclick="showForm('searchBookForm', this)">Search Online</div>
+        <div class="nav-item" onclick="showForm('downloadBookForm', this)">Download Book</div>
+        <div class="nav-item" onclick="showForm('checkAvailabilityForm', this)">Check Availbility</div>
+        
+</div>
+
+  <!-- Request Book Form -->
+  <form id="requestBookForm" class="form-container" style="display: block;" action="/user/request-book" method="post">
+    <h2>Request a Book</h2>
+    <label>Username:
+      <input type="text" name="username" required />
+    </label>
+    <label>Book Title:
+      <input type="text" name="book_title" required />
+    </label>
+    <button type="submit">Request</button>
+  </form>
+
+  <!-- Return Book Form -->
+  <form id="returnBookForm" class="form-container" action="/user/return-book" method="post">
+    <h2>Book Return</h2>
+    <label>Username:
+      <input type="text" name="username" required />
+    </label>
+    <label>Book Title:
+      <input type="text" name="book_title" required />
+    </label>
+    <button type="submit">Return</button>
+  </form>
+
+  <!-- Search Book Form -->
+  <form id="searchBookForm" class="form-container" action="/user/search-book-online" method="post">
+    <h2>Search Book Online</h2>
+    <label>Book Title:
+      <input type="text" name="category" required />
+    </label>
+    <button type="submit">Search</button>
+  </form>
+
+  <!-- Download Book Form -->
+  <form id="downloadBookForm" class="form-container" action="/user/download-book" method="post">
+    <h2>Download Book</h2>
+    <label>Book Filename:
+      <input type="text" name="book_filename" required />
+    </label>
+    <button type="submit">download</button>
+  </form>
+
+  <!-- Check Availability Form -->
+  <form id="checkAvailabilityForm" class="form-container" action="/user/check-availability" method="post">
+    <h2>Check Availability of Book</h2>
+    <label>Book Title:
+        <input type="text" name="book_title" required>
+    </label>
+    <button type="submit">Check</button>
+</form>
+
+  <footer>
+    <form action="/logout" method="post">
+      <button type="submit">Logout</button>
+    </form>
+  </footer>
+</div>
+  <script>
+    function showForm(formId, navItem) {
+      document.querySelectorAll('.form-container').forEach(form => {
+        form.style.display = 'none';
+      });
+      document.getElementById(formId).style.display = 'block';
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      navItem.classList.add('active');
+    }
+  </script>
+
+</body>
+</html>

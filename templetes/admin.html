@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .navbar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .nav-item {
+      cursor: pointer;
+      padding: 10px 20px;
+      background-color: #e0e0e0;
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-item:hover,
+    .nav-item.active {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .form-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 320px;
+      display: none;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 10px;
+      background-color: #acaaaa;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+    .wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    button:hover {
+      background-color: #45a049;
+    }
+
+    footer {
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="navbar">
+            <div class="nav-item active" onclick="showForm('createCategoryForm', this)">Create Category</div>
+            <div class="nav-item" onclick="showForm('createBookForm', this)">Create Book</div>
+            <div class="nav-item" onclick="showForm('uploadBookForm', this)">Upload Book</div>
+            <div class="nav-item" onclick="showForm('deleteBookForm', this)">Delete Book</div>
+            <div class="nav-item" onclick="showForm('createUserForm', this)">Create User</div>
+        </div>
+
+  <!-- Create Category -->
+  <form id="createCategoryForm" class="form-container" style="display: block;" action="/admin/create-category" method="post">
+    <h2>Create New Category</h2>
+    <label>Category Name:
+      <input type="text" name="c_name" required />
+    </label>
+    <label>Root Category:
+      <input type="text" name="root_category" required />
+    </label>
+    <small>*Note: If no root category, enter "None"</small>
+    <button type="submit">Submit</button>
+  </form>
+
+  <!-- Create Book -->
+  <form id="createBookForm" class="form-container" action="/admin/create-book" method="post">
+    <h2>Create New Book</h2>
+    <label>Title:
+      <input type="text" name="title" required />
+    </label>
+    <label>Author:
+      <input type="text" name="author" required />
+    </label>
+    <label>Category:
+      <input type="text" name="category" required />
+    </label>
+    <label>S3 URL:
+      <input type="url" name="s3_url" />
+    </label>
+    <label>Quantity:
+      <input type="number" name="quantity" min="0" required />
+    </label>
+    <label>Available:
+      <select name="available" required>
+        <option value="true" selected>Yes</option>
+        <option value="false">No</option>
+      </select>
+    </label>
+    <button type="submit">Create Book</button>
+  </form>
+
+  <!-- Upload Book -->
+  <form id="uploadBookForm" class="form-container" action="/admin/upload-book" method="post" enctype="multipart/form-data">
+    <h2>Upload New Book</h2>
+    <label>Book Title:
+      <input type="text" name="title" required />
+    </label>
+    <label>File:
+      <input type="file" name="File" required />
+    </label>
+    <button type="submit">Upload Book</button>
+  </form>
+
+  <!-- Delete Book -->
+  <form id="deleteBookForm" class="form-container" action="/admin/delete-book" method="post">
+    <h2>Delete Book</h2>
+    <label>Book Title:
+      <input type="text" name="title" required />
+    </label>
+    <button type="submit">Delete Book</button>
+  </form>
+
+  <!-- Create User -->
+  <form id="createUserForm" class="form-container" action="/admin/create-user" method="post">
+    <h2>Create New User</h2>
+    <label>Username:
+      <input type="text" name="username" required />
+    </label>
+    <label>Password:
+      <input type="password" name="password" required />
+    </label>
+    <label>Email:
+      <input type="email" name="email" required />
+    </label>
+    <label>S3 URL:
+      <input type="url" name="s3_url" />
+    </label>
+    <label>Role:
+      <select name="role" required>
+        <option value="admin" selected>Admin</option>
+        <option value="clerk">Clerk</option>
+        <option value="user">User</option>
+      </select>
+    </label>
+    <button type="submit">Create User</button>
+  </form>
+
+  <footer>
+    <form action="/logout" method="post" style="margin-bottom:50px">
+      <button type="submit">Logout</button>
+    </form>
+  </footer>
+</div>
+  <script>
+    function showForm(formId, navItem) {
+      document.querySelectorAll('.form-container').forEach(form => {
+        form.style.display = 'none';
+      });
+      document.getElementById(formId).style.display = 'block';
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      navItem.classList.add('active');
+    }
+  </script>
+
+</body>
+</html>

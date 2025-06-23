@@ -2,5 +2,6 @@ from pydantic import BaseModel, EmailStr
 
 class User(BaseModel):
     username: str
+    password: str
     email: EmailStr
-    role: str  # admin, clerk, user
+    role: str 

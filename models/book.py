@@ -5,4 +5,5 @@ class Book(BaseModel):
     author: str
     category: str
     s3_url: str = ""
+    quantity: int
     available: bool = True

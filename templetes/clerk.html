@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clerk</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .navbar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .nav-item {
+            cursor: pointer;
+            padding: 10px 20px;
+            background-color: #e0e0e0;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 320px;
+            display: none;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #acaaaa;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        footer {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <div class="navbar">
+            <div class="nav-item active" onclick="showForm('issueBookForm', this)">Issue Book</div>
+            <div class="nav-item" onclick="showForm('returnBookForm', this)">Return Book</div>
+            <div class="nav-item" onclick="showForm('checkAvailabilityForm', this)">Check Availability</div>
+        </div>
+
+        <!-- Issue Book Form -->
+        <form id="issueBookForm" class="form-container" style="display: block;" action="/clerk/issue-book" method="post">
+            <h2>Issue a Book</h2>
+            <label>Username:
+                <input type="text" name="username" required>
+            </label>
+            <label>Book Title:
+                <input type="text" name="book_title" required>
+            </label>
+            <button type="submit">Issue</button>
+        </form>
+
+        <!-- Return Book Form -->
+        <form id="returnBookForm" class="form-container" action="/clerk/return-book" method="post">
+            <h2>Return a Book</h2>
+            <label>Username:
+                <input type="text" name="username" required>
+            </label>
+            <label>Book Title:
+                <input type="text" name="book_title" required>
+            </label>
+            <button type="submit">Return</button>
+        </form>
+
+        <!-- Check Availability Form -->
+        <form id="checkAvailabilityForm" class="form-container" action="/clerk/check-availability" method="post">
+            <h2>Check Availability of Book</h2>
+            <label>Book Title:
+                <input type="text" name="book_title" required>
+            </label>
+            <button type="submit">Search</button>
+        </form>
+
+        <footer>
+            <form action="/logout" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </footer>
+    </div>
+
+    <script>
+        function showForm(formId, navItem) {
+            // Hide all forms
+            document.querySelectorAll('.form-container').forEach(form => {
+                form.style.display = 'none';
+            });
+
+            // Show selected form
+            document.getElementById(formId).style.display = 'block';
+
+            // Update navbar active state
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            navItem.classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
