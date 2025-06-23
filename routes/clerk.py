@@ -54,15 +54,19 @@ def check_availability(book_title: str=Form(...), current_user:dict=Depends(requ
     book = db.books.find_one({"title": book_title})
     issued=list(db.issued_books.find({"title": book_title}))
     available_in=[]
-
+    print(issued)
     if book:
         if book["quantity"]>0:
             return {"available": book["available"] if book["quantity"]>0 else False}
         else:
             if issued:
                 for book in issued:
-                    available_in.append((book["return_date"]-datetime.utcnow()).days)
-                days_in=[available_in.sort()].pop()
+                    rd = book.get("return_date")
+                    if isinstance(rd, datetime):
+                        days_left = (rd - datetime.utcnow()).days
+                        available_in.append(days_left)
+                days_in=min(available_in)
+                print(available_in)
                 return {"available":False,"available_in":days_in}
             return {"available": False}
     return {"message":f"{book_title} is not availble in Library"}
